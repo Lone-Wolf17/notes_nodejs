@@ -5,3 +5,28 @@ import { NotesStore as notes } from '../app.js';
 
 export const router = express.Router();
 
+// AddNote
+router.get('/add', (req, res, next) => {
+    res.render('noteedit', {
+        title: "Add a Note",
+        docreate: true,
+        notekey: '',
+        note: undefined
+    });
+});
+
+// Save Note (Update) 
+router.post('/save', async (req, res, next) => {
+    try {
+        let note;
+        if (req.body.docreate === "create") {
+            note = await notes.create(req.body.notekey, 
+                req.body.title, req.body.body);
+        } else {
+            note = await notes.update(req.body.notekey, 
+                req.body.title, req.body.body);
+        }
+        res.redirect('/' + req.body.notekey);
+    } catch (err) { next(err);   }
+});
+
