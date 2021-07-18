@@ -41,3 +41,37 @@ router.get('/view', async (req, res, next) => {
         });
     } catch (err) { next(err); }
 });
+
+// Edit Note (update)
+router.get('/edit', async (req, res, next) => {
+    try {
+        const note = await notes.read(req.query.key);
+        // reusing the noteedit template for creation and edits
+        res.render('noteedit', {
+            title: note ? ("Edit " + note.title) : "Add a Note",
+            docreate: false,
+            notekey: req.query.key,
+            note: note
+        });
+    } catch (err) { next(err); }
+});
+
+// Ask to Delete note (destroy)
+router.get('/destroy', async (req, res, next) => {
+    try {
+        const note = await notes.read(req.query.key);
+        res.render('notedestroy', {
+            title: note ? note.title : "",
+            notekey: req.query.key,
+            note: note
+        });
+    } catch (err) { next(err); }
+});
+
+// Really destroy note (destroy)
+router.post('/destroy/confirm', async (req, res, next) => {
+    try {
+        await notes.destroy(req.body.notekey);
+        res.redirect('/');
+    } catch (err) { next (err); }
+});
