@@ -59,9 +59,9 @@ router.get('/edit', async (req, res, next) => {
 // Ask to Delete note (destroy)
 router.get('/destroy', async (req, res, next) => {
     try {
-        const note = await notes.read(req.query.key);
+        var note = await notes.read(req.query.key);
         res.render('notedestroy', {
-            title: note ? note.title : "",
+            title: note ? `Delete ${note.title}` : "",
             notekey: req.query.key,
             note: note
         });
