@@ -4,10 +4,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env DEBUG=notes:* node ./app.js"
+    "start": "cross-env DEBUG=notes:* node ./app.js",
+    "dl-minty": "mkdir -p minty && npm run dl-minty-css && npm run dl-minty-min-css",
+    "dl-minty-css": "wget https://bootswatch.com/5/minty/bootstrap.css -O minty/bootstrap.css",
+    "dl-minty-min-css": "wget https://bootswatch.com/5/minty/bootstrap.min.css -O minty/bootstrap.min.css"
   },
   "dependencies": {
-    "bootstrap": "4.5.x",
+    "bootstrap": "5.0.0",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",

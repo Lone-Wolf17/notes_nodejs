@@ -1,0 +1,14 @@
+{
+    "scripts": {
+        "download": "wget -O - https://github.com/twbs/bootstrap/archive/v5.0.0.tar.gz | tar xvfz -",
+        "postdownload": "cd bootstrap-5.0.0 && npm install",
+        "clean": "rm -rf bootstrap-5.0.0",
+        "build": "cd bootstrap-5.0.0 && npm run dist",
+        "prebuild": "cp _custom.scss bootstrap.scss bootstrap-5.0.0/scss",
+        "postbuild": "mkdir -p dist && cp -r bootstrap-5.0.0/dist .",
+        "watch": "cd bootstrap-5.0.0 && npm run watch"
+    },
+    "dependencies": {
+        "node-sass": "^6.0.1"
+    }
+}

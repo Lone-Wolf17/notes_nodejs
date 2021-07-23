@@ -1,0 +1,5 @@
+# Bootstrap custom build
+bootstrap-5.*
+
+#ignore dist
+dist
