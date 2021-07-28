@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env DEBUG=notes:* node ./app.js",
+    "start": "REQUEST_LOG_FILE=log.txt REQUEST_LOG_FORMAT=common cross-env DEBUG=notes:* node ./app.js",
     "dl-minty": "mkdir -p minty && npm run dl-minty-css && npm run dl-minty-min-css",
     "dl-minty-css": "wget https://bootswatch.com/5/minty/bootstrap.css -O minty/bootstrap.css",
     "dl-minty-min-css": "wget https://bootswatch.com/5/minty/bootstrap.min.css -O minty/bootstrap.min.css"
@@ -20,6 +20,7 @@
     "http-errors": "~1.6.3",
     "jquery": "3.5.x",
     "morgan": "~1.9.1",
-    "popper.js": "1.16.x"
+    "popper.js": "1.16.x",
+    "rotating-file-stream": "^2.1.5"
   }
 }

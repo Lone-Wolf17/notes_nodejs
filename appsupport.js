@@ -1,4 +1,4 @@
-import { port, server } from './app.js';
+import { port, server, debug, dbgError } from './app.js';
 
 
 export function normalizePort (val) {
@@ -16,6 +16,9 @@ export function normalizePort (val) {
 }
 
 export function onError (error) {
+
+    dbgError(error);
+
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -45,7 +48,7 @@ export function onListening () {
     const bind = typeof addr === 'string'
                 ? 'pipe ' + addr
                 : 'port ' + addr.port;
-    console.log(`Listening on ${bind}`);
+    debug(`Listening on ${bind}`);
 }
 
 export function handle404 (req, res, next) {

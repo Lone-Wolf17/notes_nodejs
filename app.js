@@ -4,7 +4,7 @@ import * as path from 'path';
 // import * as favicon from 'serve-favicon';
 import { default as logger } from 'morgan';
 import { default as cookieParser } from 'cookie-parser';
-import { default as bodyParser } from 'body-parser';
+import { default as rfs } from 'rotating-file-stream';
 import * as http from 'http';
 import { approotdir } from './approotdir.js';
 import { 
@@ -12,11 +12,13 @@ import {
 } from './appsupport.js';
 import { router as indexRouter } from './routes/index.js';
 import { router as notesRouter } from './routes/notes.js';
-
+import { default as DBG } from 'debug';
 import { InMemoryNotesStore } from './models/notes-memory.js';
 export const NotesStore = new InMemoryNotesStore();
 
 const __dirname = approotdir;
+export const debug = DBG('notes:debug');
+export const dbgError = DBG('notes:error');
 
 export const app = express();
 
@@ -26,9 +28,20 @@ app.set('view engine', 'hbs');
 hbs.registerPartials(path.join(__dirname, 'partials'));
 
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev', {
+  stream: process.env.REQUEST_LOG_FILE ? 
+    rfs.createStream(process.env.REQUEST_LOG_FILE, {
+      size: '10M',      // rotate every 10 Megabytes written
+      interval: '1d',   // rotate daily
+      compress: 'gzip'  // compress rotated files
+    })
+      : process.stdout
+}));
+if (process.env.REQUEST_LOG_FILE) {
+  app.use(logger(process.env.REQUEST_LOG_FORMAT || 'dev'));
+}
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/assets/vendor/bootstrap', express.static(
@@ -63,3 +76,7 @@ export const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+server.on('request', (req, res) => {
+  debug(`${new Date().toISOString()} request ${req.method} ${req.url}`);
+});
