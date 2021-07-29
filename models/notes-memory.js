@@ -1,4 +1,4 @@
-import { Note, AbstractNotesStore } from './notes.js';
+import { Note, AbstractNotesStore } from './Notes.js';
 
 
 const notes = [];

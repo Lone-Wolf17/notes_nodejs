@@ -1,5 +1,13 @@
 import { port, server, debug, dbgError } from './app.js';
+import * as util from 'util';
 
+process.on('uncaughtException', function (err) {
+    console.error(`I've crashed!!! - ${err.stack || err}`);
+});
+
+process.on('unhandledRejection', function (err) {
+    console.error(`Unhandled Rejection at: ${util.inspect(p)} reason : ${reason}`);
+});
 
 export function normalizePort (val) {
     const port = parseInt(val, 10);

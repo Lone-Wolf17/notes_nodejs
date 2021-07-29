@@ -4,6 +4,7 @@ const _note_body = Symbol('body');
 
 
 export class Note {
+
     constructor (key, title, body) {
         this[_note_key] = key;
         this[_note_title] = title;
@@ -15,6 +16,8 @@ export class Note {
     set title(newTitle) { this[_note_title] = newTitle; }
     get body() { return this[_note_body]; }
     set body(newBody) { this[_note_body] = newBody; }
+
+    
 
 }
 
