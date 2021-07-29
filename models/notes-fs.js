@@ -14,21 +14,21 @@ export default class FSNotesStore extends AbstractNotesStore {
 
     async update (key, title, body) { return crupdate(key, title, body); }
 
-    async create (key, title, body) { return crupdate(key, title, bidy); }
+    async create (key, title, body) { return crupdate(key, title, body); }
 
     async read (key) {
-        const notesdir = await notesdir();
+        const notesdir = await notesDir();
         const thenote = await readJSON(notesdir, key);
         return thenote;
     }
 
     async destroy (key) {
-        const notesdir = await notesdir();
+        const notesdir = await notesDir();
         await fs.unlink(filepath(notesdir, key));
     }
 
     async keylist () {
-        const notesdir = await notesdir();
+        const notesdir = await notesDir();
         let filez = await fs.readdir(notesdir);
         if (!filez || typeof filez === 'undefined') filez = [];
         const thenotes = filez.map (async fname => {

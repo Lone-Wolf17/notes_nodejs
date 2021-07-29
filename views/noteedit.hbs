@@ -11,7 +11,7 @@
             {{#if docreate }}
                 <div class="col">
                     <input type="text" class="form-control"
-                    placeholder="note key" name='notekey' value=''/>
+                    placeholder="Note Key" name='notekey' value=''/>
                 </div>
             {{else}}
                 {{#if note }}
@@ -26,16 +26,16 @@
             <label for="title" class="col-1 col-form-label">Title</label>
             <div class="col">
                 <input type="text" class="form-control"
-                        id="title" name="title" placeholder="note title"
+                        id="title" name="title" placeholder="Note Title"
                         value="{{#if note }} {{notekey}} {{/if}}"/>
             </div>
         </div>
 
         <div class="form-group row">
-            <textarea class="form-control" name="body" 
+            <textarea class="form-control" name="body" placeholder="Note Body"
                     rows="5">{{#if note }}{{note.body}}{{/if}}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default btn-outline-dark">Submit</button>
     </div>
 </form>

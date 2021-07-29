@@ -18,7 +18,7 @@ export class Note {
     set body(newBody) { this[_note_body] = newBody; }
 
     get JSON () {
-        return this.JSON.stringigy({
+        return JSON.stringify({
             key: this.key, title: this.title, body: this.body
         });
     }
