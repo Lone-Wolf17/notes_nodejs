@@ -3,7 +3,7 @@ import { Note, AbstractNotesStore } from './Notes.js';
 
 const notes = [];
 
-export class InMemoryNotesStore extends AbstractNotesStore {
+export default class InMemoryNotesStore extends AbstractNotesStore {
     async close () {}
 
     async update (key, title, body) {

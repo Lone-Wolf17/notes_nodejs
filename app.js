@@ -13,8 +13,11 @@ import {
 import { router as indexRouter } from './routes/index.js';
 import { router as notesRouter } from './routes/notes.js';
 import { default as DBG } from 'debug';
-import { InMemoryNotesStore } from './models/notes-memory.js';
-export const NotesStore = new InMemoryNotesStore();
+import { useModel as useNotesModel } from './models/notes-store.js';
+
+useNotesModel(process.env.NOTES_MODEL ? process.env.NOTES_MODEL : "memory")
+  .then(store => {})
+  .catch(error => { onError({ code: 'ENOTESSTORE', error}); });
 
 const __dirname = approotdir;
 export const debug = DBG('notes:debug');
