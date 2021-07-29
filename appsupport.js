@@ -87,3 +87,16 @@ export function basicErrorHandler (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 }
+
+async function catchProcessDeath () {
+    debug ('urk...');
+    await NotesStore.close();
+    await server.close();
+    process.exit(0);
+}
+
+process.on('SIGTERM', catchProcessDeath);
+process.on('SIGINT', catchProcessDeath);
+process.on('SIGHUP', catchProcessDeath);
+
+process.on('exit', () => { debug ('exiting'); });
