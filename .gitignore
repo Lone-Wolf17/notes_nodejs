@@ -59,6 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+#Application files
 package-lock.json
 .vscode
 log.txt
+notes.level/
+notes-fs-data/

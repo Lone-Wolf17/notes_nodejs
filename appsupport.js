@@ -1,5 +1,6 @@
 import { port, server, debug, dbgError } from './app.js';
 import * as util from 'util';
+import { NotesStore } from './models/notes-store.js';
 
 process.on('uncaughtException', function (err) {
     console.error(`I've crashed!!! - ${err.stack || err}`);
