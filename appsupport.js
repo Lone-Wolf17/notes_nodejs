@@ -6,7 +6,7 @@ process.on('uncaughtException', function (err) {
     console.error(`I've crashed!!! - ${err.stack || err}`);
 });
 
-process.on('unhandledRejection', function (err) {
+process.on('unhandledRejection', function (reason, p) {
     console.error(`Unhandled Rejection at: ${util.inspect(p)} reason : ${reason}`);
 });
 
