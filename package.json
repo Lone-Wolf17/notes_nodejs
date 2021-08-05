@@ -22,7 +22,6 @@
     "mongodb-start": "cross-env DEBUG=notes:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=chap07 NOTES_MODEL=mongodb node ./app.js",
     "mongodb-server1": "cross-env DEBUG=notes:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=chap07 NOTES_MODEL=mongodb PORT=3001 node ./app.js",
     "mongodb-server2": "cross-env DEBUG=notes:* MONGO_URL=mongodb://localhost/ MONGO_DBNAME=chap07 NOTES_MODEL=mongodb PORT=3002 node ./app.js"
-
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.5",
@@ -42,6 +41,7 @@
     "popper.js": "1.16.x",
     "rotating-file-stream": "^2.1.5",
     "sequelize": "^6.6.5",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^4.2.0",
+    "superagent": "^6.1.0"
   }
 }
