@@ -12,18 +12,27 @@ import {
 } from './appsupport.js';
 import { router as indexRouter } from './routes/index.js';
 import { router as notesRouter } from './routes/notes.js';
+import { router as usersRouter, initPassport } from './routes/users.js';
+import session from 'express-session';
+import sessionFileStore from 'session-file-store';
 import { default as DBG } from 'debug';
 import { useModel as useNotesModel } from './models/notes-store.js';
+
+const FileStore = sessionFileStore(session);
+const __dirname = approotdir;
+
+export const sessionCookieName = 'notescookie.sid';
+export const debug = DBG('notes:debug');
+export const dbgError = DBG('notes:error');
+export const app = express();
 
 useNotesModel(process.env.NOTES_MODEL ? process.env.NOTES_MODEL : "memory")
   .then(store => {})
   .catch(error => { onError({ code: 'ENOTESSTORE', error}); });
 
-const __dirname = approotdir;
-export const debug = DBG('notes:debug');
-export const dbgError = DBG('notes:error');
 
-export const app = express();
+import { default as OS } from 'os';
+process.env.UV_THREADPOOL_SIZE = OS.cpus().length
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,6 +56,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  store: new FileStore({ path: "sessions" }),
+  secret: 'keyboard mouse',
+  resave: false,
+  saveUninitialized: false,
+  name: sessionCookieName
+}));
+initPassport(app);
 // app.use('/assets/vendor/bootstrap', express.static(
 //   path.join(__dirname, 'node_modules', 'bootstrap', 'dist')));
 // app.use('/assets/vendor/bootstrap', express.static(
@@ -65,6 +82,7 @@ app.use('/assets/vendor/feather-icons', express.static(
 // Router function lists 
 app.use('/', indexRouter);
 app.use('/notes', notesRouter);
+app.use('/users', usersRouter);
 
 // error handlers 
 // catch 404 and forward to error handler
